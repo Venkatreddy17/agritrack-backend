@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Property Files ###
+*.properties
+*.env
+.gitlab-ci.yml
+### Docker ###
+docker-compose.yml
