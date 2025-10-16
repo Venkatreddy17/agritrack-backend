@@ -1,0 +1,47 @@
+#spring:
+#  config:
+#    import: optional:file:.env[.properties] # Spring loads the file itself
+#  datasource:
+#    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+#    username: ${DB_USER:postgres}
+#    password: ${DB_PASSWORD:venkat}
+#    driver-class-name: org.postgresql.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create  # create/update tables automatically
+#    show-sql: true
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#
+## Optional: server port
+#server:
+#  port: 8081
+# 1. Configuration Import
+# This is where you tell Spring Boot (3.1+) to load the .env file.
+# This MUST be placed at the top of the file, outside of the 'datasource' block.
+
+
+spring:
+  config:
+    import: optional:file:.env[.properties] # Correct placement of the import
+
+  # --- Database Configuration ---
+  # 2. Datasource Configuration (Note: It is a sibling of 'config', not a child)
+  datasource:
+    # Use placeholders. They will be resolved by the variables loaded from .env.
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER} # Good: Includes a safe default
+    password: ${DB_PASSWORD} # Good: Includes a safe default
+    driver-class-name: org.postgresql.Driver
+
+  # 3. JPA/Hibernate Configuration (Sibling to 'datasource')
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+# --- Server Configuration (Outside of the 'spring' block) ---
+# 4. Server configuration is an independent top-level entry.
+server:
+  port: 8081
